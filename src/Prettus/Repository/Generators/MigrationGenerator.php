@@ -150,6 +150,7 @@ class MigrationGenerator extends Generator
                     'class'  => $this->getClass(),
                     'table'  => $parser->getTable(),
                     'fields' => $this->getSchemaParser()->up(),
+                    'model'  => $this->model,
                 ];
                 break;
         }

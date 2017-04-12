@@ -63,7 +63,8 @@ class ControllerGenerator extends Generator
     public function getControllerName()
     {
 
-        return ucfirst($this->getPluralName());
+//        return ucfirst($this->getPluralName());
+        return ucfirst($this->getSingularName());
     }
 
     /**

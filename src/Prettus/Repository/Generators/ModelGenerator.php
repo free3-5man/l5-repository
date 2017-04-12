@@ -67,7 +67,10 @@ class ModelGenerator extends Generator
     public function getReplacements()
     {
         return array_merge(parent::getReplacements(), [
-            'fillable' => $this->getFillable()
+            'fillable'          => $this->getFillable(),
+            'fields'            => $this->getFields(),
+            'transform_aliases' => $this->getTransformAliases(),
+            'table'             => $this->table,
         ]);
     }
 
@@ -84,7 +87,8 @@ class ModelGenerator extends Generator
         $results = '[' . PHP_EOL;
 
         foreach ($this->getSchemaParser()->toArray() as $column => $value) {
-            $results .= "\t\t'{$column}'," . PHP_EOL;
+            $columnUpperCase = strtoupper($column);
+            $results .= "\t\tself::FIELD_$columnUpperCase," . PHP_EOL;
         }
 
         return $results . "\t" . ']';
@@ -98,5 +102,30 @@ class ModelGenerator extends Generator
     public function getSchemaParser()
     {
         return new SchemaParser($this->fillable);
+    }
+
+    private function getFields()
+    {
+        $results = '';
+
+        foreach ($this->getSchemaParser()->toArray() as $column => $value) {
+            $results .= "\t/** Field name */" . PHP_EOL;
+            $columnUpperCase = strtoupper($column);
+            $results .= "\tconst FIELD_{$columnUpperCase} = '$column';" . PHP_EOL;
+        }
+
+        return $results;
+    }
+
+    private function getTransformAliases()
+    {
+        $results = '';
+
+        foreach ($this->getSchemaParser()->toArray() as $column => $value) {
+            $columnUpperCase = strtoupper($column);
+            $results .= "\t\t\t'$column' => \$this->{self::FIELD_$columnUpperCase}," . PHP_EOL;
+        }
+
+        return $results;
     }
 }
