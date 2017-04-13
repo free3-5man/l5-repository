@@ -203,11 +203,12 @@ class SchemaParser implements Arrayable
      */
     protected function addColumn($key, $field, $column)
     {
+        $column = 'Model::FIELD_' . strtoupper($column);
         if ($this->hasCustomAttribute($column)) {
             return '->' . $field;
         }
         if ($key == 0) {
-            return '->' . $field . "('" . $column . "')";
+            return '->' . $field . "(" . $column . ")";
         }
         if (str_contains($field, '(')) {
             return '->' . $field;
