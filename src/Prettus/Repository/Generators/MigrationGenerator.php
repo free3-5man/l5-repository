@@ -154,7 +154,7 @@ class MigrationGenerator extends Generator
                 ];
                 break;
         }
-        $path = config('repository.generator.stubsOverridePath', __DIR__);
+        $path = config('repository.generator.paths.stubsOverridePath', __DIR__);
 
         if (!file_exists($path . "/Stubs/migration/{$file}.stub")) {
             $path = __DIR__;

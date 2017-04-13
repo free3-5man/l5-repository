@@ -75,7 +75,7 @@ abstract class Generator
      */
     public function getStub()
     {
-        $path = config('repository.generator.stubsOverridePath', __DIR__);
+        $path = config('repository.generator.paths.stubsOverridePath', __DIR__);
 
         if(!file_exists($path . '/Stubs/' . $this->stub . '.stub')){
             $path = __DIR__;
