@@ -82,7 +82,9 @@ class RulesParser implements Arrayable
     public function getColumn($rules)
     {
         return array_first(explode('=>', $rules), function ($key, $value) {
-            return $value;
+//            return $value;
+            /** fix bug by freeman */
+            return $key;
         });
     }
 
